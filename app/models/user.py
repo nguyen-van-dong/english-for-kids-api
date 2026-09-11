@@ -16,6 +16,7 @@ class User(Base):
     
     # Email Verification fields
     is_verified = Column(Boolean, default=False, nullable=False)
+    is_admin = Column(Boolean, default=False, nullable=False)
     verification_code = Column(String, nullable=True)
     verification_code_expires_at = Column(DateTime(timezone=True), nullable=True)
 

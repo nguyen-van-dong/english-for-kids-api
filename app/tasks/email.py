@@ -61,7 +61,7 @@ def send_verification_email_task(self, to_email: str, child_name: str, verificat
     """
     Celery Background Task to send email verification code via SMTP (or log in dev).
     """
-    subject = f"✨ Verify your English for Kids account ({verification_code})"
+    subject = f"✨ Verify your English for Kids account"
     html_content = generate_verification_html(child_name, verification_code)
 
     # 1. Check if SMTP credentials are fully provided

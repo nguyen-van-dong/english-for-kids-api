@@ -43,7 +43,9 @@ class Settings(BaseSettings):
 
     # TTS / Audio Configuration
     AUDIO_CACHE_DIR: str = "static/audio"
-    DEFAULT_TTS_VOICE: str = "en-US-AnaNeural"
+    DEFAULT_TTS_VOICE: str = "en-US-JennyNeural"
+    DEFAULT_TTS_RATE: str = "+0%"
+    DEFAULT_TTS_VOLUME: str = "+40%"
 
     model_config = SettingsConfigDict(
         env_file=".env",
