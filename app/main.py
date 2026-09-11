@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+
 from app.core.config import settings
+from app.core.exceptions import AppException
 from app.api.v1.api import api_router
 from app.database import engine, Base
 
@@ -16,6 +19,14 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     lifespan=lifespan
 )
+
+# Global Exception Handler for Domain Exceptions
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message, "details": exc.details},
+    )
 
 # Set up CORS for React Native, Expo Web, and local emulators
 app.add_middleware(
