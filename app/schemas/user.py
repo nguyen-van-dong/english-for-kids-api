@@ -18,6 +18,20 @@ class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
+# Email Verification schemas
+class VerifyEmailRequest(BaseModel):
+    email: EmailStr
+    code: str
+
+class ResendVerificationRequest(BaseModel):
+    email: EmailStr
+
+class RegisterResponse(BaseModel):
+    message: str
+    email: str
+    child_name: str
+    is_verified: bool = False
+
 # Token response
 class Token(BaseModel):
     access_token: str
@@ -43,12 +57,14 @@ class ProgressSync(BaseModel):
 # Properties to return to client
 class UserResponse(UserBase):
     id: int
+    is_verified: bool = False
     stars: int
     streak_days: int
     last_active_date: Optional[str] = ""
     mastered_words: List[str] = []
     completed_categories: List[str] = []
     quiz_high_score: int = 0
+    total_study_minutes: Optional[int] = 0
 
     class Config:
         from_attributes = True
