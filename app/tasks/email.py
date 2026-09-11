@@ -85,7 +85,9 @@ def send_verification_email_task(self, to_email: str, child_name: str, verificat
             return {"status": "sent", "email": to_email}
         except Exception as exc:
             logger.error(f"❌ Failed to send verification email to {to_email}: {exc}")
-            raise self.retry(exc=exc, countdown=10)
+            if self and hasattr(self, "retry"):
+                raise self.retry(exc=exc, countdown=10)
+            return {"status": "error", "error": str(exc)}
     else:
         # 2. Local / Development fallback logging with high visibility
         print("=" * 60)

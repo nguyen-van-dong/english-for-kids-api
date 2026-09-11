@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.models.learning import StudySession, TimelineEvent, WordProgress
 from app.repositories.base import BaseRepository
-from app.schemas.learning import StudySessionInput, TimelineEventInput, WordProgressInput
+from app.schemas.learning import StudySessionCreate, TimelineEventCreate, WordProgressCreate
 
 class StudySessionRepository(BaseRepository[StudySession]):
     def __init__(self, db: Session):
@@ -28,7 +28,7 @@ class StudySessionRepository(BaseRepository[StudySession]):
             .all()
         )
 
-    def upsert_session(self, user_id: int, s_in: StudySessionInput) -> StudySession:
+    def upsert_session(self, user_id: int, s_in: StudySessionCreate) -> StudySession:
         existing = (
             self.db.query(StudySession)
             .filter(
@@ -87,7 +87,7 @@ class TimelineEventRepository(BaseRepository[TimelineEvent]):
             .count()
         )
 
-    def upsert_event(self, user_id: int, ev_in: TimelineEventInput) -> TimelineEvent:
+    def upsert_event(self, user_id: int, ev_in: TimelineEventCreate) -> TimelineEvent:
         existing = (
             self.db.query(TimelineEvent)
             .filter(
@@ -139,7 +139,7 @@ class WordProgressRepository(BaseRepository[WordProgress]):
         self,
         user_id: int,
         word_id: str,
-        wp_in: WordProgressInput
+        wp_in: WordProgressCreate
     ) -> WordProgress:
         existing = (
             self.db.query(WordProgress)
